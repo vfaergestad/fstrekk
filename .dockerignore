@@ -1,0 +1,6 @@
+.git
+reference/
+*.md
+k8s/
+.dockerignore
+Dockerfile
