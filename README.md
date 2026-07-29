@@ -33,6 +33,42 @@ python3 -m http.server 8000
 
 Alt ligger under nøkkelen `fstrekk.v1` i `localStorage`. «Nullstill alt» tømmer.
 
+## Hvordan tilfeldighet sikres
+
+Trekningen skjer live i nettleseren, ett element om gangen — ingenting er
+forhåndsbestemt eller hardkodet. For hver trekning:
+
+1. **Kandidatlisten bygges på nytt.** Verktøyet samler alle elementene i puljen
+   som ennå ikke er trukket i grenen (uten tilbakelegging).
+2. **Ett element velges likt fordelt.** Blant kandidatene trekkes ett tilfeldig,
+   der hvert gjenværende element har nøyaktig samme sannsynlighet (1/N):
+   `cand[Math.floor(Math.random() * cand.length)]`. Dette tilsvarer å trekke én
+   lapp fra én beholder med alle blocks og randoms (FAI CR-FS 4.2.2).
+3. **Sannsynlighetene oppdateres.** Fordi trekningen er uten tilbakelegging,
+   krymper beholderen for hver trekning — som en fysisk trekning. Runden stopper
+   når poengmålet er nådd (5/6, 4/5 eller 3/4 avhengig av gren).
+
+**Tilfeldighetskilde:** nettleserens innebygde `Math.random()`. Det er en rask
+PRNG av høy kvalitet med jevn (uniform) fordeling — men **ikke** kryptografisk
+sikker. For en trekning er poenget rettferdig, jevn fordeling, ikke å være
+uforutsigbar mot en motstander. Legitimiteten til en ekte NM-trekning kommer
+uansett fra at den gjøres **offentlig og under hoveddommers tilsyn**
+(FAI CR-FS 4.2.1); verktøyet gjenskaper kun selve mekanikken. (Skal det brukes i
+en setting der en sterkere kilde er ønskelig, kan `Math.random()` byttes ut med
+`crypto.getRandomValues()` uten andre endringer.)
+
+**Bestemte unntak — ved regel, ikke tilfeldighet:**
+- Speed Formation runde 1 er alltid Stjerne (A): settes fast, trekkes ikke.
+- Er puljen for liten til unike runder, gjenbrukes elementer (men aldri to like i
+  samme runde), og en advarsel vises.
+
+**Reproduserbarhet:** det finnes ingen «seed» — hver trekning, og hvert trykk på
+«Trekk runde på nytt», er en helt ny og uavhengig trekning. Det er den lagrede
+fasiten som gjelder, ikke en gjenskapbar sekvens.
+
+Fordelingen er kontrollert empirisk: over titusener av simulerte runder fordeler
+elementene seg jevnt, og rundene lander innenfor riktig poengvindu.
+
 ## Grener og pooler
 
 | Gren | Randoms | Blocks | Standard pulje |
