@@ -1,0 +1,9 @@
+# local/test artifacts
+site/seed.html
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+*~
+.idea/
+.vscode/
