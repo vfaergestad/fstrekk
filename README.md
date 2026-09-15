@@ -1,6 +1,6 @@
 # fstrekk — trekning av dive pools
 
-Enkelt webverktøy for å trekke dive pools kvelden før NM i fallskjerm.
+Enkelt webverktøy for å trekke dive pools før en fallskjermkonkurranse.
 Velg gren → sett sammen puljen → antall runder → trekk element for element.
 Hver trekning viser **bokstav/tall stort** sammen med selve **formasjonen**
 (offisielle FAI-/NLF-diagram). Resultatet lagres i nettleseren.
@@ -51,7 +51,7 @@ forhåndsbestemt eller hardkodet. For hver trekning:
 **Tilfeldighetskilde:** nettleserens innebygde `Math.random()`. Det er en rask
 PRNG av høy kvalitet med jevn (uniform) fordeling — men **ikke** kryptografisk
 sikker. For en trekning er poenget rettferdig, jevn fordeling, ikke å være
-uforutsigbar mot en motstander. Legitimiteten til en ekte NM-trekning kommer
+uforutsigbar mot en motstander. Legitimiteten til en ekte konkurransetrekning kommer
 uansett fra at den gjøres **offentlig og under hoveddommers tilsyn**
 (FAI CR-FS 4.2.1); verktøyet gjenskaper kun selve mekanikken. (Skal det brukes i
 en setting der en sterkere kilde er ønskelig, kan `Math.random()` byttes ut med
@@ -75,7 +75,7 @@ elementene seg jevnt, og rundene lander innenfor riktig poengvindu.
 |------|---------|--------|----------------|
 | FS-4 Open | A–Q (16) | 1–22 | alle |
 | FS-4 Intermediate | A–Q (16) | 1–22 | blocks 2,4,6,7,8,9,19,21 |
-| FS-8 | A–Q (16) | 1–22 | blocks 1,3,4,5,6,7,8,10,13–19 |
+| FS-8 | A–Q (16) | 1–22 | alle |
 | VFS-4 | A–Q (16) | 1–22 | alle |
 | VFS-2 | A–H (8) | 1–8 | alle |
 | FS-2 Nybegynner | A–H (8) | 1–15 | alle |
@@ -98,9 +98,9 @@ site/
 reference/        kilde-PDF-ene (FAI/NLF dive pools) formasjonsbildene er klippet fra
 ```
 
-Formasjonsbildene er klippet direkte ut av de offisielle dive pool-PDF-ene fra
-[nmfallskjerm.no](https://www.nmfallskjerm.no/) (FAI Competition Rules for FS/VFS
-2026-utgaven, og FNLF/AXIS beginner- og speed-pooler), én rute per element.
+Formasjonsbildene er klippet direkte ut av de offisielle dive pool-PDF-ene
+(FAI Competition Rules for FS/VFS 2026-utgaven, og FNLF/AXIS beginner- og
+speed-pooler), én rute per element.
 
 Randomnavn (f.eks. FS-4: A Unipod, J Donut, M Star) vises ved siden av bokstaven.
 Blocknavn står i selve bildet (start- og sluttformasjon med rotasjoner).

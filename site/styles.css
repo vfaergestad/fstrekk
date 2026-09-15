@@ -68,9 +68,6 @@ button{font:inherit;cursor:pointer}
 .section-title{font-size:13px;text-transform:uppercase;letter-spacing:.7px;color:var(--muted);font-weight:700;margin:26px 2px 12px}
 
 /* ---- home / discipline list ---- */
-.nm-logo{display:block;margin:26px auto 4px;max-width:520px;width:100%}
-.nm-logo img{display:block;width:100%;height:auto;border-radius:14px;box-shadow:var(--shadow)}
-@media print{ .nm-logo{max-width:320px;margin:0 0 10px} .nm-logo img{box-shadow:none} }
 .hero{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin:26px 0 6px}
 .hero h2{margin:0;font-size:26px}
 .event-title{font-weight:700;border:none;background:transparent;font-size:26px;color:var(--ink);width:100%;padding:2px 4px;border-radius:8px}

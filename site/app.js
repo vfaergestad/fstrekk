@@ -35,9 +35,9 @@ const DISCIPLINES = {
          rounds:6, pts:5, names:NAMES.fs4,  note:'Full FAI 4-way pool — all randoms and all 22 blocks.'},
   fsi4: {label:'FS-4 Intermediate',    img:'fs4',  randoms:L16, blocks:rng(22), defRandoms:'all',
          defBlocks:[2,4,6,7,8,9,19,21], rounds:6, pts:3, names:NAMES.fs4, note:'All randoms; blocks 2,4,6,7,8,9,19,21.'},
-  fs8 : {label:'FS-8',                 img:'fs8',  randoms:L16, blocks:rng(22), defRandoms:'all',
-         defBlocks:[1,3,4,5,6,7,8,10,13,14,15,16,17,18,19], rounds:6, pts:4, names:NAMES.fs8,
-         note:'8-way pool — all randoms; NM block set 1,3,4,5,6,7,8,10,13-19. 4-5 poeng/runde.'},
+  fs8 : {label:'FS-8',                 img:'fs8',  randoms:L16, blocks:rng(22), defRandoms:'all', defBlocks:'all',
+         rounds:6, pts:4, names:NAMES.fs8,
+         note:'8-way pool — all randoms and all 22 blocks. 4-5 poeng/runde.'},
   vfs4: {label:'VFS-4',                img:'vfs4', randoms:L16, blocks:rng(22), defRandoms:'all', defBlocks:'all',
          rounds:6, pts:5, names:NAMES.vfs4, note:'Full VFS 4-way pool — all randoms and all 22 blocks.'},
   vfs2: {label:'VFS-2',                img:'vfs2', randoms:L8,  blocks:rng(8),  defRandoms:'all', defBlocks:'all',
@@ -46,7 +46,7 @@ const DISCIPLINES = {
          rounds:6, pts:3, names:NAMES.fs2,  note:'Beginner 2-way pool (FNLF) — 8 randoms, 15 blocks.'},
   six : {label:'6-way Speed (SF)',     img:'six',  randoms:LSF, blocks:[],      defRandoms:'all', defBlocks:[],
          rounds:4, pts:1, single:true, firstFixed:'A', names:NAMES.six,
-         note:'Speed Formation (prøvegren) — én formasjon per runde, tas på tid. 4 runder; runde 1 er alltid Stjerne (A). Trekkes uten tilbakelegging.'},
+         note:'Speed Formation — én formasjon per runde, tas på tid. 4 runder; runde 1 er alltid Stjerne (A). Trekkes uten tilbakelegging.'},
 };
 const ORDER = ['fs4','fsi4','fs8','vfs4','vfs2','fs2','six'];
 
@@ -55,7 +55,7 @@ const KEY = 'fstrekk.v1';
 let state = load();
 function load(){
   try{ const s = JSON.parse(localStorage.getItem(KEY)); if(s&&s.disciplines) return s; }catch(e){}
-  return { event:{title:'NM Fallskjerm 2026 — Østre Æra', date:''}, disciplines:[] };
+  return { event:{title:'', date:''}, disciplines:[] };
 }
 function save(){ localStorage.setItem(KEY, JSON.stringify(state)); }
 const uid = () => Math.random().toString(36).slice(2,9);
@@ -141,12 +141,9 @@ function renderHome(){
   const totalRounds = ds.reduce((s,d)=>s+d.rounds,0);
   const doneRounds  = ds.reduce((s,d)=>s+d.draws.filter(r=>r&&r.length&&roundDone(d,r)).length,0);
   app.innerHTML = `
-    <a class="nm-logo" href="https://www.nmfallskjerm.no/" target="_blank" rel="noopener">
-      <img src="img/nm-logo.png" alt="NM Skydive Oslo — 3.–8. august 2026">
-    </a>
     <div class="hero">
       <div style="flex:1">
-        <input class="event-title" id="evtTitle" value="${esc(state.event.title)}">
+        <input class="event-title" id="evtTitle" value="${esc(state.event.title)}" placeholder="Navn på konkurransen">
         <div class="event-sub">Trekning av dive pools · lagres i nettleseren${totalRounds?` · ${doneRounds}/${totalRounds} runder trukket`:''}</div>
       </div>
       <div style="display:flex;gap:8px">
@@ -380,7 +377,7 @@ function renderSheet(){
   const ds=state.disciplines;
   app.innerHTML = `
     <div class="draw-head">
-      <div><h2>Fasit — ${esc(state.event.title)}</h2>
+      <div><h2>Fasit${state.event.title?` — ${esc(state.event.title)}`:''}</h2>
         <div class="sub">Trukket rekkefølge for alle grener</div></div>
       <div style="display:flex;gap:8px">
         <button class="btn" onclick="go({name:'home'})">← Grener</button>
